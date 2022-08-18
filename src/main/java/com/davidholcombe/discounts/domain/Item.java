@@ -1,14 +1,15 @@
 package com.davidholcombe.discounts.domain;
 
+import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
 
 import java.math.BigDecimal;
 
 @Value
+@Builder
 public class Item {
 
-    @NonNull
     private long id;
 
     @NonNull
@@ -16,5 +17,8 @@ public class Item {
 
     @NonNull
     private ItemType type;
+
+    @NonNull
+    private String description;
 
 }

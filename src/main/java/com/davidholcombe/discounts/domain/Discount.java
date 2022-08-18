@@ -1,14 +1,12 @@
 package com.davidholcombe.discounts.domain;
 
-import lombok.NonNull;
-import lombok.Value;
+import java.math.BigDecimal;
+import java.util.Map;
 
-@Value
-public class Discount {
+public interface Discount {
 
-    @NonNull
-    private String code;
+    String getCode();
 
-    private double percentOff;
+    BigDecimal calculateDiscountedTotalCost(final Map<Item, Long> items);
 
 }
