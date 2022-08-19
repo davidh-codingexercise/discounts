@@ -34,8 +34,6 @@ public class DiscountsService {
     @Transactional
     public DiscountResponse addDiscount(final AddDiscountCommand command) {
 
-        // TODO validation
-
         final DiscountEntity discountEntity = DiscountEntity.builder()
                 .code(command.getCode())
                 .type(command.getType())
@@ -48,6 +46,9 @@ public class DiscountsService {
                         .map(QuantityDTO::getItemId).orElse(null))
                 .build();
 
+        // validate that the provided discount properties are complete - will throw if invalid
+        DiscountFactory.from(discountEntity);
+
         final DiscountEntity savedDiscount = discountRepository.save(discountEntity);
         return DiscountResponse.from(savedDiscount);
     }
@@ -57,7 +58,7 @@ public class DiscountsService {
 
         final Optional<DiscountEntity> discount = discountRepository.findById(command.getCode());
 
-        // TODO change exception type
+        // TODO replace exception type
         discount.ifPresentOrElse(discountRepository::delete,
                 () -> { throw new RuntimeException(String.format("Discount not found for code %s", command.getCode())); });
     }
@@ -73,8 +74,6 @@ public class DiscountsService {
 
     public GetBestDiscountResponse getBestDiscount(final GetBestDiscountCommand command) {
 
-        validateNoRepeatedItems(command);
-
         final ImmutableMap<Item, Long> items = command.getItems().stream()
                 .collect(ImmutableMap.toImmutableMap(item -> itemsService.getItem(item.getItemId()), QuantityDTO::getQuantity));
 
@@ -82,22 +81,16 @@ public class DiscountsService {
                 .map(DiscountFactory::from)
                 .collect(ImmutableSet.toImmutableSet());
 
-        final ImmutableMap<BigDecimal, String> discountedPricesByCode = discounts.stream()
-                .collect(ImmutableMap.toImmutableMap(discount ->
-                        discount.calculateDiscountedTotalCost(items), Discount::getCode));
+        final ImmutableMap<String, BigDecimal> discountedPricesByCode = discounts.stream()
+                .collect(ImmutableMap.toImmutableMap(Discount::getCode,
+                        discount -> discount.calculateDiscountedTotalCost(items)));
 
         return discountedPricesByCode.entrySet().stream()
-                .min(Map.Entry.comparingByKey())
+                .min(Map.Entry.comparingByValue())
                 .map(entry -> GetBestDiscountResponse.builder()
-                        .discountCode(entry.getValue())
-                        .totalCost(entry.getKey()).build())
+                        .discountCode(entry.getKey())
+                        .totalCost(entry.getValue()).build())
                 .orElse(GetBestDiscountResponse.builder().build());
-    }
-
-    private void validateNoRepeatedItems(final GetBestDiscountCommand command) {
-
-        // TODO change exception type
-        // throw new RuntimeException("Request contains repeated items");
     }
 
 }

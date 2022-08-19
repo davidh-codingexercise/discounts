@@ -18,7 +18,7 @@ public class DiscountFactory {
                 return DiscountForItemCost.from(entity);
 
             default:
-                // TODO change exception type
+                // TODO replace exception type
                 throw new RuntimeException(String.format("Unknown discount type: %s", entity.getType()));
         }
     }
