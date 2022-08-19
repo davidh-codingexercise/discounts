@@ -11,7 +11,6 @@ import com.davidholcombe.discounts.domain.response.GetDiscountsResponse;
 import com.davidholcombe.discounts.service.DiscountsService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,7 +20,7 @@ public class DiscountsController {
 
     private DiscountsService discountsService;
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public DiscountResponse addDiscount(@RequestBody final AddDiscountRequest request) {
 
@@ -53,7 +52,7 @@ public class DiscountsController {
         discountsService.removeDiscount(command);
     }
 
-    @PostMapping(value = "/best", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping("/best")
     @ResponseStatus(HttpStatus.OK)
     public GetBestDiscountResponse getBestDiscount(@RequestBody final GetBestDiscountRequest request) {
 
