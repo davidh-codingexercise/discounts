@@ -46,7 +46,8 @@ public class DiscountsService {
                         .map(QuantityDTO::getItemId).orElse(null))
                 .build();
 
-        // validate that the provided discount properties are complete - will throw if invalid
+        // validate that the provided discount properties are complete -
+        // will throw exception if invalid
         DiscountFactory.from(discountEntity);
 
         final DiscountEntity savedDiscount = discountRepository.save(discountEntity);
@@ -60,7 +61,8 @@ public class DiscountsService {
 
         // TODO replace exception type
         discount.ifPresentOrElse(discountRepository::delete,
-                () -> { throw new RuntimeException(String.format("Discount not found for code %s", command.getCode())); });
+                () -> { throw new RuntimeException(
+                        String.format("Discount not found for code %s", command.getCode())); });
     }
 
     public GetDiscountsResponse getDiscounts() {

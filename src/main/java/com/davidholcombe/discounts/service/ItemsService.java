@@ -11,6 +11,8 @@ import java.util.Optional;
 @Service
 public class ItemsService {
 
+    // a basic, hardcoded implementation of a service to retrieve items
+
     private static final Item SHIRT = Item.builder()
             .id(123)
             .cost(BigDecimal.valueOf(50))
@@ -33,7 +35,8 @@ public class ItemsService {
         final Item item = ALL_ITEMS.get(id);
 
         // TODO replace exception type
-        return Optional.ofNullable(item).orElseThrow();
+        return Optional.ofNullable(item).orElseThrow(
+                () -> new RuntimeException(String.format("Item with id %s not found", id)));
     }
 
 }
