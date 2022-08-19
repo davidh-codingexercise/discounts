@@ -1,0 +1,255 @@
+{
+	"info": {
+		"_postman_id": "a27a1319-84d5-4fd5-8f3c-3c66d3879873",
+		"name": "coding challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET - all discounts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/discounts",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"discounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST - create discount ABC",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"code\" : \"ABC\",\n    \"type\" : \"FOR_ITEM_TYPE\",\n    \"percentageDiscount\" : 0.10,\n    \"appliedForItemType\" : \"CLOTHES\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/discounts",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"discounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST - create discount CDE",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"code\" : \"CDE\",\n    \"type\" : \"FOR_COST\",\n    \"percentageDiscount\" : 0.15,\n    \"appliedForItemCost\" : 100\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/discounts",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"discounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST - create discount FGH",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"code\": \"FGH\",\n    \"type\": \"FOR_COUNT\",\n    \"percentageDiscount\": 0.20,\n    \"appliedForItemAndQuantity\": {\n        \"quantity\": 2,\n        \"itemId\": 123\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/discounts",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"discounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST - best discount scenario A",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"items\": [\n        {\n            \"quantity\": 1,\n            \"itemId\": 123\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/discounts/best",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"discounts",
+						"best"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST - best discount scenario B",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"items\": [\n        {\n            \"quantity\": 5,\n            \"itemId\": 123\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/discounts/best",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"discounts",
+						"best"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST - best discount scenario C",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"items\": [\n        {\n            \"quantity\": 1,\n            \"itemId\": 123\n        },\n        {\n            \"quantity\": 1,\n            \"itemId\": 456\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/discounts/best",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"discounts",
+						"best"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE - discount ABC",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/discounts/ABC",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"discounts",
+						"ABC"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE - discount CDE",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/discounts/CDE",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"discounts",
+						"CDE"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE - discount FGH",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/discounts/FGH",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"discounts",
+						"FGH"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "code",
+			"value": "ABC"
+		}
+	]
+}
