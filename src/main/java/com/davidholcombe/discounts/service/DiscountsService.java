@@ -1,7 +1,6 @@
 package com.davidholcombe.discounts.service;
 
 import com.davidholcombe.discounts.domain.Discount;
-import com.davidholcombe.discounts.domain.DiscountFactory;
 import com.davidholcombe.discounts.domain.Item;
 import com.davidholcombe.discounts.domain.QuantityDTO;
 import com.davidholcombe.discounts.domain.command.AddDiscountCommand;
@@ -48,7 +47,7 @@ public class DiscountsService {
 
         // validate that the provided discount properties are complete -
         // will throw exception if invalid
-        DiscountFactory.from(discountEntity);
+        command.getType().transformFromEntity(discountEntity);
 
         final DiscountEntity savedDiscount = discountRepository.save(discountEntity);
         return DiscountResponse.from(savedDiscount);
@@ -80,7 +79,7 @@ public class DiscountsService {
                 .collect(ImmutableMap.toImmutableMap(item -> itemsService.getItem(item.getItemId()), QuantityDTO::getQuantity));
 
         final ImmutableSet<Discount> discounts = discountRepository.findAll().stream()
-                .map(DiscountFactory::from)
+                .map(discount -> discount.getType().transformFromEntity(discount))
                 .collect(ImmutableSet.toImmutableSet());
 
         final ImmutableMap<String, BigDecimal> discountedPricesByCode = discounts.stream()
